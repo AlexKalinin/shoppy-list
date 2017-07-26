@@ -2,13 +2,21 @@
 <html>
   <head>
     <title>ShoppyVue</title>
-    <%= csrf_meta_tags %>
+    <meta name="apple-mobile-web-app-title" content="Alex Kalinin">
+    <meta name='turbolinks-cache-control' content='no-cache' >
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag 'adminka', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'adminka', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
-  <body>
-    <%= yield %>
+  <body data-location="<%= "#{controller_path}##{action_name}" %>">
+
+    <%= render partial: 'adminka/main_menu' %>
+
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>

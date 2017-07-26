@@ -2,3 +2,18 @@ ru:
   marketing:
     slogan: 'Мы помним для Вас о важном!'
     login: "Войти"
+  adminka:
+    main_menu:
+      lists: 'Списки'
+      products: 'Продукты'
+      logout: 'Выйти'
+    product_lists:
+      page_title: 'Все списки'
+      button_new: 'Новый список'
+      flash:
+        created: 'Список успешно создан'
+      ui_modal_new:
+        title: 'Создание нового списка'
+        placeholder: 'Наименование списка'
+    products:
+      page_title: 'Все товары'

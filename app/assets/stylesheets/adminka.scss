@@ -1,0 +1,11 @@
+@import 'bootstrap';
+@import 'font-awesome';
+@import 'toastr';
+
+.main-menu{
+  .navbar-brand{
+    img{
+      height: 40px;
+    }
+  }
+}

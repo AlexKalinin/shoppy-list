@@ -1,8 +1,8 @@
 %p
-  [logo here]
+  = image_tag 'logo.png'
 
 %p
   = t('marketing.slogan')
 
 %p
-  = link_to t('marketing.login'), new_user_session_path
+  = link_to t('marketing.login'), adminka_root_path, 'data-turbolinks': 'false'

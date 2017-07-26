@@ -1,10 +1,5 @@
 class ApplicationController < ActionController::Base
+  include LocaleConcern
+
   protect_from_forgery with: :exception
-  before_action :set_locale
-
-
-  private
-    def set_locale
-      I18n.locale = :ru
-    end
 end
