@@ -1,9 +1,14 @@
 module Adminka
   class ProductListsController < BasicController
-    before_action :set_product_list, only: [:show, :edit, :update, :destroy, :remove_product, :new_product, :create_product]
+    before_action :set_product_list,
+                  only: [:show, :edit, :update, :destroy, :remove_product, :new_product, :create_product, :products]
 
     def index
       @product_lists = ProductList.all
+      respond_to do |format|
+        format.html
+        format.json
+      end
     end
 
     def show
@@ -56,6 +61,11 @@ module Adminka
 
     def is_busy
       render json: !!ProductList.find_by(name: params[:name])
+    end
+
+    def products
+      @products = @product_list.products
+      respond_to.json
     end
 
     private

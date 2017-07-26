@@ -1,8 +1,9 @@
 <script>
   import ModalPopup from './modal-popup'
+  import List from './list'
 
   export default {
-    components: { ModalPopup },
+    components: { ModalPopup, List },
     methods: {
       showModalPopup(){
         this.showCreateNewPopup = true;
@@ -41,6 +42,10 @@
       @created="handleNewListCreated"
       @canceled="handleNewListCanceled"
     />
+
+    <div class="row">
+      <list />
+    </div>
 
   </div>
 </template>
