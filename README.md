@@ -1,24 +1,7 @@
-# README
+# Shoppy List
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Демо-приложение, на основе Ruby on Rails и VueJS
 
-Things you may want to cover:
+## Дизайн
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+![design](design/preview.png)
