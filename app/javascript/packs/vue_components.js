@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import ProductsListApp from '../adminka/products-list.vue'
+import ProductsListApp from '../adminka/products_lists'
 
 Vue.mixin({
   methods: {
@@ -15,9 +15,9 @@ Vue.mixin({
   }
 });
 
-new Vue(ProductsListApp).$mount('products-list-app');
-console.log('Mounted products-list-app');
-
 document.addEventListener('turbolinks:load', function(){
-
+  if($('body').attr('data-location') === 'adminka/product_lists#index'){
+    new Vue(ProductsListApp).$mount('products-list-app');
+    console.log('Mounted products-list-app');
+  }
 });

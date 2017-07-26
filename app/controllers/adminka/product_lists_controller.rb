@@ -17,12 +17,8 @@ module Adminka
     end
 
     def create
-      @product_list = ProductList.new(product_list_params)
-      if @product_list.save
-        redirect_to @product_list, notice: t('adminka.product_lists.flash.created')
-      else
-        render :new
-      end
+      ProductList.create!(product_list_params)
+      render json: true
     end
 
     def update
@@ -56,6 +52,10 @@ module Adminka
     end
 
     def new_product
+    end
+
+    def is_busy
+      render json: !!ProductList.find_by(name: params[:name])
     end
 
     private

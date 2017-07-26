@@ -9,6 +9,9 @@
     <%= stylesheet_link_tag 'adminka', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'adminka', 'data-turbolinks-track': 'reload' %>
 
+    <%= javascript_pack_tag 'vue_components', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'vue_components', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body data-location="<%= "#{controller_path}##{action_name}" %>">

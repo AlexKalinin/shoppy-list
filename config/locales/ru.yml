@@ -15,5 +15,12 @@ ru:
       ui_modal_new:
         title: 'Создание нового списка'
         placeholder: 'Наименование списка'
+        buttons:
+          create: 'Создать'
+          cancel: 'Отмена'
+        warnings:
+          incorrect_name: 'Неверное имя для списка'
+          already_taken: 'Список с таким именем уже существует'
+        created: 'Новый список успешно создан'
     products:
       page_title: 'Все товары'
