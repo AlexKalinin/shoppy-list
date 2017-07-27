@@ -34,6 +34,7 @@
 
     data: function () {
       return {
+        productListId: -1
 //        showCreateNewPopup: false,
 //        isListLoading: false,
 //        lists: []
@@ -48,6 +49,7 @@
 
 <template>
   <div>
+    <div>{{productListId}}</div>
     <div class="row mt-3">
       <div class="col">
         <h1>{{ t('adminka.product_list.page_title') }}</h1>

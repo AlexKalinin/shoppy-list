@@ -9,10 +9,10 @@ Vue.mixin({
       return I18n.t(key);
     },
 
-    //proxy to rails routes
-    r(){
-      return Routes;
-    }
+    // //proxy to rails routes
+    // r(){
+    //   return Routes;
+    // }
   }
 });
 
@@ -27,7 +27,10 @@ document.addEventListener('turbolinks:load', function(){
 
   //products_list EDIT
   if(currentPageLocation === 'adminka/product_lists#edit'){
-    new Vue(ProductListsEditApp).$mount('product-lists-edit-app');
+    let app = new Vue(ProductListsEditApp);
+    app.productListId = + $('product-lists-edit-app').attr('data-id');
+    app.$mount('product-lists-edit-app');
+
     console.log('Mounted edit-products-list-app'); //TODO: remove this debug message
   }
 });
