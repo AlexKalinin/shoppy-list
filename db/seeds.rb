@@ -5,12 +5,13 @@ if Rails.env.development?
 
   50.times do
     products << Product.create!(
-        name: FFaker::Product.product_name,
-        description: FFaker::Product.product,
-        amount: rand(100),
-        unit: 'kg',
-        color: Product.colors.keys.to_a.sample,
-        author: user
+      name: FFaker::Product.product_name,
+      description: FFaker::Product.product,
+      amount: rand(100),
+      unit: 'kg',
+      color: Product.colors.keys.to_a.sample,
+      price: rand(1000000) / 100.0,
+      author: user
     )
   end
 

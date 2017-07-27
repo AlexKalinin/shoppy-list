@@ -38,8 +38,8 @@ module Adminka
     end
 
     def remove_product
-      @product_list.products.delete(params[:product_id])
-      redirect_to product_list_path(@product_list), notice: 'Product was successfully removed from this list.'
+      authorize! :update, @product_list
+      render json: @product_list.products.delete(params[:product_id])
     end
 
     def create_product
@@ -56,7 +56,7 @@ module Adminka
 
     def products
       @products = @product_list.products
-      respond_to.json
+      respond_to :json
     end
 
     def toggle_done

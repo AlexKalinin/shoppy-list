@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  enum color: { white: 0, black: 1, red: 2, green: 3, blue: 4 }
+  enum color: { orange: 0, gray: 1, red: 2, green: 3, blue: 4 }
   enum units: { kg: 0, pieces: 1, liter: 2}
 
   has_and_belongs_to_many :product_lists

@@ -29,6 +29,7 @@ document.addEventListener('turbolinks:load', function(){
   if(currentPageLocation === 'adminka/product_lists#edit'){
     let app = new Vue(ProductListsEditApp);
     app.productListId = + $('product-lists-edit-app').attr('data-id');
+    app.productListName = $('product-lists-edit-app').attr('data-name');
     app.$mount('product-lists-edit-app');
 
     console.log('Mounted edit-products-list-app'); //TODO: remove this debug message

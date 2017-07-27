@@ -1,6 +1,6 @@
 <script>
   import ModalPopup from './modal-new-list'
-  import List from '../_components/list'
+  import List from './list'
 
   export default {
     components: { ModalPopup, List },
