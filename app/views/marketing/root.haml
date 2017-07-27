@@ -1,8 +1,7 @@
-%p
-  = image_tag 'logo.png'
-
-%p
-  = t('marketing.slogan')
-
-%p
-  = link_to t('marketing.login'), adminka_root_path, 'data-turbolinks': 'false'
+.page-wrapper
+  .empty
+  .message
+    .head
+      =image_tag('logo.png')
+    .text Мы помним для Вас о важном!
+    .link= link_to 'Войти', adminka_root_path, 'data-turbolinks': 'false', class: 'static-link'
