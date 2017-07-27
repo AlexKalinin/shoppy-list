@@ -80,11 +80,11 @@
       </tr>
 
       <tr v-if="isLoading">
-        <td colspan="4" class="text-center">{{ t('adminka.product_list.products.loading') }}</td>
+        <td colspan="6" class="text-center">{{ t('adminka.product_list.products.loading') }}</td>
       </tr>
 
       <tr v-if="!isLoading && isEmpty()">
-        <td colspan="4" class="text-center">{{ t('adminka.product_list.products.empty') }}</td>
+        <td colspan="6" class="text-center">{{ t('adminka.product_list.products.empty') }}</td>
       </tr>
 
       </tbody>

@@ -10,4 +10,10 @@ class ProductList < ApplicationRecord
   def self.name_taken(name, author)
     ProductList.where(name: name, author: author).any?
   end
+
+  def sum
+    # Rails.cache.fetch "product_list.#{self.id}.products_sum" do    # TODO: think about cache
+      products.inject(0){|sum, p| sum + p.price * p.amount }.round 2
+    # end
+  end
 end

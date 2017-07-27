@@ -19,22 +19,71 @@
             this.isProductsLoading = false;
           }
         })
+      },
+
+      validateName(){
+        if(this.productListName === this.originalProductListName){
+          this.invalidNameWarnMessage = '';
+          this.isNameValid = true;
+          this.isNameChanged = false;
+          return;
+        }
+        if(this.productListName && this.productListName.length > 0){
+          this.isNameValid = true;
+          this.invalidNameWarnMessage = '';
+
+          //is this name is already taken?
+          $.ajax({
+            url: Routes.is_name_taken_adminka_product_lists_path(),
+            method: 'GET',
+            data: { name: this.productListName },
+            dataType: 'json',
+            success: (is_name_taken) => {
+              if(is_name_taken){
+                this.isNameValid = false;
+                this.invalidNameWarnMessage = this.t('adminka.product_lists.ui_modal_new.warnings.already_taken')
+              }else{
+                if(this.invalidNameWarnMessage === this.t('adminka.product_lists.ui_modal_new.warnings.already_taken')){
+                  this.invalidNameWarnMessage = '';
+                  this.isNameValid = true;
+                }
+              }
+            }
+          });
+        }else{
+          this.isNameValid = false;
+          this.invalidNameWarnMessage = this.t('adminka.product_lists.ui_modal_new.warnings.incorrect_name');
+        }
       }
     },
 
     data: function () {
       return {
+        isNameChanged: false,
+        originalProductListName: '',
         productListId: -1,
         productListName: '',
         showNewProductWindow: false,
         isProductsLoading: false,
         products: [],
+        isNameValid: true,
+        invalidNameWarnMessage: '',
       }
     },
 
     mounted(){
+      this.originalProductListName = this.productListName;
       this.loadProductsFromServer();
-    }
+    },
+
+    watch: {
+      'productListName': function(val){
+        this.isNameChanged = true;
+        this.validateName();
+      }
+    },
+
+
   }
 </script>
 
@@ -48,11 +97,12 @@
     <div class="row mt-3">
       <div class="col">
         <div class="input-group">
-          <input type="text" class="form-control" :placeholder="t('adminka.product_list.name_input.placeholder')" :value="productListName">
+          <input type="text" class="form-control" aria-describedby="nameWarningText" :placeholder="t('adminka.product_list.name_input.placeholder')" v-model="productListName">
           <span class="input-group-btn">
-            <button class="btn btn-secondary" type="button">{{ t('adminka.product_list.name_input.btn_update') }}</button>
+            <button :disabled='!isNameValid || !isNameChanged' class="btn btn-secondary" type="button">{{ t('adminka.product_list.name_input.btn_update') }}</button>
           </span>
         </div>
+        <small v-if="!isNameValid" id="nameWarningText" class="form-text text-warning">{{invalidNameWarnMessage}}</small>
       </div>
     </div>
     <div class="row mt-3">
