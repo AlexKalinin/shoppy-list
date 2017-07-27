@@ -31,6 +31,10 @@
         })
       },
 
+      handleEdit(list){
+        Turbolinks.visit(Routes.edit_adminka_product_list_path(list.id))
+      },
+
       cssClassForList(list){
         return list.done ? 'item-marked-done' : ''
       }
@@ -67,6 +71,7 @@
         <td class="col-2 text-center">{{ list.products_number }}</td>
         <td class="col-2 text-center">{{ list.products_sum }}</td>
         <td class="col-2 text-center" >
+          <a href="javascript:void(0)" @click="handleEdit(list)"><i class="fa fa-pencil" /></a>
           <a href="javascript:void(0)" @click="toggleDone(list)">
             <i v-if="list.done" class="fa fa-check-square" />
             <i v-else="" class="fa fa-check-square-o" />

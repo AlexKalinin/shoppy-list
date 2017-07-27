@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   namespace :adminka do
     root 'product_lists#index'
     resources :products
-    resources :product_lists do
+    resources(:product_lists, except: [:show, :new]) do
       member do
         delete 'product/:product_id' => 'product_lists#remove_product', as: :remove_product_from
         get 'product' => 'product_lists#new_product', as: :new_product_to

@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import ProductsListApp from '../adminka/products_lists'
+import ProductListsIndexApp from '../adminka/product_lists/index'
+import ProductListsEditApp from '../adminka/product_lists/edit'
 
 Vue.mixin({
   methods: {
@@ -16,8 +17,17 @@ Vue.mixin({
 });
 
 document.addEventListener('turbolinks:load', function(){
-  if($('body').attr('data-location') === 'adminka/product_lists#index'){
-    new Vue(ProductsListApp).$mount('products-list-app');
-    console.log('Mounted products-list-app');
+  let currentPageLocation = $('body').attr('data-location');
+
+  //products_list LIST
+  if(currentPageLocation === 'adminka/product_lists#index'){
+    new Vue(ProductListsIndexApp).$mount('product-lists-index-app');
+    console.log('Mounted products-list-index-app'); //TODO: remove this debug message
+  }
+
+  //products_list EDIT
+  if(currentPageLocation === 'adminka/product_lists#edit'){
+    new Vue(ProductListsEditApp).$mount('product-lists-edit-app');
+    console.log('Mounted edit-products-list-app'); //TODO: remove this debug message
   }
 });

@@ -15,14 +15,8 @@ module Adminka
       end
     end
 
-    def show
-    end
-
-    def new
-      @product_list = ProductList.new
-    end
-
     def edit
+
     end
 
     def create
@@ -31,15 +25,8 @@ module Adminka
     end
 
     def update
-      respond_to do |format|
-        if @product_list.update(product_list_params)
-          format.html {redirect_to @product_list, notice: 'Product list was successfully updated.'}
-          format.json {render :show, status: :ok, location: @product_list}
-        else
-          format.html {render :edit}
-          format.json {render json: @product_list.errors, status: :unprocessable_entity}
-        end
-      end
+      @product_list.update!(product_list_params)
+      render json: true
     end
 
     def destroy

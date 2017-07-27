@@ -5,7 +5,7 @@ class ProductList < ApplicationRecord
   validates :name, presence: true
   validates_uniqueness_of :name, :scope => :author_id
 
-  scope :by_user, ->(user) { user.product_lists.order('updated_at DESC') }
+  scope :by_user, ->(user) { user.product_lists.order(:done, updated_at: :desc) }
 
   def self.name_taken(name, author)
     ProductList.where(name: name, author: author).any?
