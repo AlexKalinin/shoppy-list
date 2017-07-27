@@ -4,7 +4,7 @@ module Adminka
 
     protect_from_forgery with: :exception
 
-    before_action :authenticate_user!  unless Rails.env.development?
+    before_action :authenticate_user!
 
     layout 'adminka'
   end

@@ -37,21 +37,26 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'hamlit'
 gem 'hamlit-rails'
+
 gem 'devise'
+gem 'cancancan', '~> 2.0'
+
 gem 'jquery-rails'
 gem 'js-routes'
-
 gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'rails-assets-tether'
 gem 'font-awesome-rails'
 gem 'toastr-rails'
 gem 'i18n-js'
 
+
 group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'pry-stack_explorer'
   gem 'pry-doc'
+
+  gem 'ffaker'
 end
 
 group :development do

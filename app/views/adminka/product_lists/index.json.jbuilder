@@ -3,5 +3,5 @@ json.array! @product_lists do |list|
   json.name list.name
   json.products_number list.products.count
   json.products_sum -1
-  json.is_done false
+  json.done list.done
 end

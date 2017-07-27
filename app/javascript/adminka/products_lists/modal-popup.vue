@@ -59,12 +59,12 @@
 
           //is this name is already taken?
           $.ajax({
-            url: Routes.is_busy_adminka_product_lists_path(),
+            url: Routes.is_name_taken_adminka_product_lists_path(),
             method: 'GET',
             data: { name: this.name },
             dataType: 'json',
-            success: (is_busy) => {
-              if(is_busy){
+            success: (is_name_taken) => {
+              if(is_name_taken){
                 this.isValid = false;
                 this.warnMessage = this.t('adminka.product_lists.ui_modal_new.warnings.already_taken')
               }else{

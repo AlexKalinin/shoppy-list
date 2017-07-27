@@ -13,10 +13,11 @@ Rails.application.routes.draw do
         get 'product' => 'product_lists#new_product', as: :new_product_to
         post 'product' => 'product_lists#create_product', as: :add_product_to
         get 'products' => 'product_lists#products', as: :products_of
+        post 'toggle_done' => 'product_lists#toggle_done', as: :toggle_done
       end
 
       collection do
-        get 'is_busy' => 'product_lists#is_busy', as: :is_busy
+        get 'is_name_taken' => 'product_lists#name_taken?', as: :is_name_taken
       end
     end
   end

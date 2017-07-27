@@ -3,6 +3,7 @@ class Product < ApplicationRecord
   enum units: { kg: 0, pieces: 1, liter: 2}
 
   has_and_belongs_to_many :product_lists
+  belongs_to :author, class_name: 'User', foreign_key: 'author_id'
 
   validates :name, :amount, :unit, presence: true
   validates :description, presence: true, length: { maximum: 150 }

@@ -14,3 +14,6 @@
 I18n.locale = 'ru'
 
 $.ajaxSetup({ headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') } })
+
+$(document).on 'ajaxError', (event, response) ->
+  UI.error(I18n.t('adminka.common.ajax_error'))

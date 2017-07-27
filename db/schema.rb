@@ -10,12 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726065647) do
+ActiveRecord::Schema.define(version: 20170727072643) do
 
   create_table "product_lists", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "author_id"
+    t.boolean "done", default: false
+    t.index ["author_id"], name: "index_product_lists_on_author_id"
   end
 
   create_table "product_lists_products", id: false, force: :cascade do |t|
@@ -33,6 +36,8 @@ ActiveRecord::Schema.define(version: 20170726065647) do
     t.integer "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "author_id"
+    t.index ["author_id"], name: "index_products_on_author_id"
   end
 
   create_table "users", force: :cascade do |t|

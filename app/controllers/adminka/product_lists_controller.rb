@@ -1,10 +1,14 @@
 module Adminka
   class ProductListsController < BasicController
+    check_authorization except: [:index, :name_taken?]
+    load_and_authorize_resource param_method: :product_list_params
+
     before_action :set_product_list,
-                  only: [:show, :edit, :update, :destroy, :remove_product, :new_product, :create_product, :products]
+                  only: [ :show, :edit, :update, :destroy, :remove_product,
+                          :new_product, :create_product, :products, :toggle_done ]
 
     def index
-      @product_lists = ProductList.all
+      @product_lists = ProductList.by_user(current_user)
       respond_to do |format|
         format.html
         format.json
@@ -59,8 +63,8 @@ module Adminka
     def new_product
     end
 
-    def is_busy
-      render json: !!ProductList.find_by(name: params[:name])
+    def name_taken?
+      render json: ProductList.name_taken(params[:name], current_user)
     end
 
     def products
@@ -68,14 +72,18 @@ module Adminka
       respond_to.json
     end
 
+    def toggle_done
+      authorize! :update, @product_list
+      render json: @product_list.update_attribute(:done, !@product_list.done)
+    end
+
     private
       def set_product_list
         @product_list = ProductList.find(params[:id])
       end
 
-
       def product_list_params
-        params.require(:product_list).permit(:name)
+        params.require(:product_list).permit(:name).merge({author: current_user})
       end
   end
 end

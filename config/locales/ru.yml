@@ -3,6 +3,8 @@ ru:
     slogan: 'Мы помним для Вас о важном!'
     login: "Войти"
   adminka:
+    common:
+      ajax_error: 'Произошла ошибка при обращении к серверу'
     main_menu:
       lists: 'Списки'
       products: 'Продукты'
