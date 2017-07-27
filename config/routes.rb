@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root 'marketing#root'
 
-  devise_for :users
+  devise_for :users, controllers: {
+      sessions: 'users/sessions'
+  }
 
 
   namespace :adminka do

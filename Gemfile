@@ -37,6 +37,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'hamlit'
 gem 'hamlit-rails'
+gem 'simple_form'
 
 gem 'devise'
 gem 'cancancan', '~> 2.0'

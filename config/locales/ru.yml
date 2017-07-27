@@ -1,5 +1,12 @@
 ru:
   common:
+    authentification_form:
+      login: 'Вход в систему'
+      email: 'Email'
+      password: 'Пароль'
+      remember_me: 'Запомнить меня'
+      button_enter: 'Войти'
+      button_cancel: 'Отмена'
     errors:
       404:
         no_page: 'Ой, а такой страницы нет...'
