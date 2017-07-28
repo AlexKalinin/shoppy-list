@@ -54,6 +54,30 @@
           this.isNameValid = false;
           this.invalidNameWarnMessage = this.t('adminka.product_lists.ui_modal_new.warnings.incorrect_name');
         }
+      },
+
+      handleUpdateName(){
+        if(!this.isNameValid){
+          return;
+        }
+
+        $.ajax({
+          url: Routes.adminka_product_list_path(this.productListId),
+          method: 'PUT',
+          dataType: 'json',
+          data: { product_list: { name: this.productListName } },
+          success: () => {
+            UI.success(this.t('adminka.product_list.flash.product_list_name_updated'))
+            this.originalProductListName = this.productListName;
+            this.isNameChanged = false;
+          }
+        })
+      },
+      handleResetName(){
+        this.productListName = this.originalProductListName;
+        this.invalidNameWarnMessage = '';
+        this.isNameValid = true;
+        this.isNameChanged = false;
       }
     },
 
@@ -99,7 +123,23 @@
         <div class="input-group">
           <input type="text" class="form-control" aria-describedby="nameWarningText" :placeholder="t('adminka.product_list.name_input.placeholder')" v-model="productListName">
           <span class="input-group-btn">
-            <button :disabled='!isNameValid || !isNameChanged' class="btn btn-secondary" type="button">{{ t('adminka.product_list.name_input.btn_update') }}</button>
+            <button
+              v-if="isNameChanged"
+              @click="handleResetName()"
+              class="btn btn-secondary"
+              type="button" >
+              x
+            </button>
+          </span>
+
+          <span class="input-group-btn">
+            <button
+                    @click="handleUpdateName()"
+                    :disabled='!isNameValid || !isNameChanged'
+                    class="btn btn-primary"
+                    type="button" >
+                {{ t('adminka.product_list.name_input.btn_update') }}
+            </button>
           </span>
         </div>
         <small v-if="!isNameValid" id="nameWarningText" class="form-text text-warning">{{invalidNameWarnMessage}}</small>
