@@ -41,6 +41,12 @@
 
     },
 
+    filters: {
+      price: function (value) {
+        return value.toFixed(2) + ' ₽'
+      }
+    },
+
 //    data: function () {
 //      return {
 //        lists: [],
@@ -69,7 +75,7 @@
       <tr v-if="!isLoading && isAnyInList()" v-for="list in lists" :class="cssClassForList(list)">
         <td class="col-6">{{ list.name }}</td>
         <td class="col-2 text-center">{{ list.products_number }}</td>
-        <td class="col-2 text-center">{{ list.products_sum }}</td>
+        <td class="col-2 text-right product-sum">{{ list.products_sum | price }}</td>
         <td class="col-2 text-center" >
           <a href="javascript:void(0)" @click="handleEdit(list)"><i class="fa fa-pencil" /></a>
           <a href="javascript:void(0)" @click="toggleDone(list)">
@@ -99,6 +105,9 @@
     .item-marked-done{
       &, td a{ color: #c1c1c1; }
       a{ text-decoration: line-through; }
+    }
+    .product-sum{
+      white-space: nowrap;
     }
   }
 </style>
