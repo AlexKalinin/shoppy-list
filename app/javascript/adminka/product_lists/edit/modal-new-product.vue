@@ -9,10 +9,14 @@
     props: ['productListId'],
 
     methods: {
-      handleAddButton(){
+      handleSubmited(){
+        $('#modal-new-product').modal('hide');
+        $('#modal-new-product').on('hidden.bs.modal',(e) => {
+          this.$emit('submitted');
+        });
       },
 
-      handleCancelButton(){
+      handleCanceled(){
         $('#modal-new-product').modal('hide');
         $('#modal-new-product').on('hidden.bs.modal',(e) => {
           this.$emit('canceled');
@@ -22,6 +26,7 @@
 
     data: function () {
       return {
+        addingSource: 'filter', // filter | creation
       }
     },
 
@@ -49,16 +54,14 @@
           <div class="modal-body">
             <div class="form-group">
               <button type="button" class="btn btn-success">{{ t('adminka.product_list.ui_modal_new_product.header.btn_create_new') }}</button>
-              <button type="button" class="btn btn-secondary ml-2">{{ t('adminka.product_list.ui_modal_new_product.header.btn_all_products') }}</button>
+              <!--<button type="button" class="btn btn-secondary ml-2">{{ t('adminka.product_list.ui_modal_new_product.header.btn_all_products') }}</button>-->
             </div>
 
             <modal-new-product-filter-form
               :productListId="productListId"
+              @selected="handleSubmited"
+              @canceled="handleCanceled"
             />
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="handleAddButton">{{ t('adminka.product_list.ui_modal_new_product.footer.btn_add') }}</button>
-            <button type="button" class="btn btn-secondary" @click="handleCancelButton">{{ t('adminka.product_list.ui_modal_new_product.footer.btn_cancel') }}</button>
           </div>
         </div>
       </div>

@@ -79,11 +79,11 @@
         this.isNameValid = true;
         this.isNameChanged = false;
       },
-      handleNewProductCreated(){
+      handleModalNewProductSubmitted(){
         this.showNewProductWindow = false;
         this.loadProductsFromServer();
       },
-      handleNewProductCanceled(){
+      handleModalNewProductCanceled(){
         this.showNewProductWindow = false;
       },
     },
@@ -166,8 +166,8 @@
     <modal-new-product
       v-if="showNewProductWindow"
       :productListId="productListId"
-      @created="handleNewProductCreated"
-      @canceled="handleNewProductCanceled"
+      @submitted="handleModalNewProductSubmitted"
+      @canceled="handleModalNewProductCanceled"
     />
 
     <div class="row mt-3">

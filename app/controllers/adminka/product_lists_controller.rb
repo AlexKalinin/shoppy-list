@@ -4,8 +4,7 @@ module Adminka
     load_and_authorize_resource param_method: :product_list_params
 
     before_action :set_product_list,
-                  only: [ :show, :edit, :update, :destroy, :remove_product,
-                          :new_product, :create_product, :products, :toggle_done ]
+                  only: [:edit, :update, :destroy, :remove_product, :add_product, :products, :toggle_done ]
 
     def index
       @product_lists = ProductList.by_user(current_user)
@@ -42,12 +41,12 @@ module Adminka
       render json: @product_list.products.delete(params[:product_id])
     end
 
-    def create_product
-      @product_list.products << Product.find(params[:product_list][:products])
-      redirect_to product_list_path(@product_list), notice: 'Product was successfully added this list.'
-    end
-
-    def new_product
+    def add_product
+      product = Product.find(params[:product_id])
+      authorize! :update, @product_list
+      authorize! :read, product
+      @product_list.products << product
+      render json: true
     end
 
     def name_taken?

@@ -2,9 +2,28 @@
   export default {
     name: 'modal-new-product-filter-form',
 
-    props: [],
+    props: ['productListId'],
 
     methods: {
+      handleSelectButton(){
+        if(!this.isProductSelected){
+          return;
+        }
+
+        $.ajax({
+            url: Routes.add_product_to_adminka_product_list_path(this.productListId, this.lastSelectedProduct.id),
+            method: 'POST',
+            dataType: 'json',
+            success: () => {
+              this.$emit('selected');
+            }
+        });
+      },
+
+      handleCancelButton(){
+        this.$emit('canceled');
+      },
+
       loadProductsFromServer(){
         this.isProductsLoading = true;
         $.ajax({
@@ -30,11 +49,13 @@
         this.removeProductsSelection();
         product.isSelected = true;
         this.lastSelectedProduct = product;
+        this.isProductSelected = true;
       },
 
       removeProductsSelection(){
         this.lastSelectedProduct.isSelected = false;
-        this.lastSelectedProduct = {}
+        this.lastSelectedProduct = {};
+        this.isProductSelected = false;
       },
 
       handleProductClick(product){
@@ -81,7 +102,8 @@
         isProductsLoading: true,
         productsFromServer: [],
         products: [],
-        lastSelectedProduct: {}
+        lastSelectedProduct: {},
+        isProductSelected: false,
       }
     },
 
@@ -124,6 +146,11 @@
 
         <li v-for="product in products" @click="handleProductClick(product)" :class="productItemCss(product)">{{ product.name }}</li>
       </ul>
+    </div>
+
+    <div class="modal-footer" scope="props">
+      <button type="button" class="btn btn-primary" :disabled="!isProductSelected" @click="handleSelectButton">{{ t('adminka.product_list.ui_modal_new_product.footer.btn_add') }}</button>
+      <button type="button" class="btn btn-secondary" @click="handleCancelButton">{{ t('adminka.product_list.ui_modal_new_product.footer.btn_cancel') }}</button>
     </div>
 
   </div>
