@@ -1,6 +1,6 @@
 module Adminka
   class ProductListsController < BasicController
-    check_authorization except: [:index, :name_taken?]
+    check_authorization except: [:index, :is_name_taken]
     load_and_authorize_resource param_method: :product_list_params
 
     before_action :set_product_list,
@@ -49,7 +49,7 @@ module Adminka
       render json: true
     end
 
-    def name_taken?
+    def is_name_taken
       render json: ProductList.name_taken(params[:name], current_user)
     end
 

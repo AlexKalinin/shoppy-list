@@ -1,29 +1,24 @@
 module Adminka
   class ProductsController < BasicController
+    check_authorization except: [:index, :is_name_taken]
+    load_and_authorize_resource param_method: :product_list_params
+
     before_action :set_product, only: [:show, :edit, :update, :destroy]
 
-    # GET /products
-    # GET /products.json
     def index
       @products = Product.all
     end
 
-    # GET /products/1
-    # GET /products/1.json
     def show
     end
 
-    # GET /products/new
     def new
       @product = Product.new
     end
 
-    # GET /products/1/edit
     def edit
     end
 
-    # POST /products
-    # POST /products.json
     def create
       @product = Product.new(product_params)
 
@@ -38,8 +33,6 @@ module Adminka
       end
     end
 
-    # PATCH/PUT /products/1
-    # PATCH/PUT /products/1.json
     def update
       respond_to do |format|
         if @product.update(product_params)
@@ -52,8 +45,6 @@ module Adminka
       end
     end
 
-    # DELETE /products/1
-    # DELETE /products/1.json
     def destroy
       respond_to do |format|
         format.html {redirect_to products_url, notice: 'Product was successfully destroyed.'}
@@ -61,15 +52,17 @@ module Adminka
       end
     end
 
-    private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
+    def is_name_taken
+      render json: Product.name_taken(params[:name], current_user)
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def product_params
-      params.require(:product).permit(:name, :description, :amount, :unit, :color)
-    end
+    private
+      def set_product
+        @product = Product.find(params[:id])
+      end
+
+      def product_params
+        params.require(:product).permit(:name, :description, :amount, :unit, :color)
+      end
   end
 end

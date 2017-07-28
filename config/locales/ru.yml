@@ -76,16 +76,27 @@ ru:
         header:
           title: 'Добавление товара'
           btn_create_new: 'Создать новый'
-          btn_all_products: 'Все товары'
+          btn_select_existing: 'Выбрать существующий'
+#          btn_all_products: 'Все товары'
         filter:
           label: 'Фильтр'
           placeholder: 'Начните вводить наименование товара'
           loading: 'Загрузка списка товаров с сервера...'
         creation_form:
+          warnings:
+            name:
+              empty: 'Имя продукта не может быть пустым'
+              kill: 'Мы не настолько жестоки!'
+              taken: 'Продукт с таким именем уже существует!'
+
           name_field:
             label: 'Наименование'
             placeholder: 'Введите наименование'
           unit: 'Единица измерения'
+          units:
+            kg: 'кг.'
+            pieces: 'шт.'
+            liter: 'л.'
           price:
             label: 'Цена'
             curency: 'Руб.'
@@ -95,6 +106,7 @@ ru:
             placeholder: 'Описание к товару отсутствует'
         footer:
           btn_add: 'Добавить'
+          btn_create: 'Создать'
           btn_cancel: 'Отмена'
 
     products:

@@ -26,7 +26,7 @@
 </script>
 
 <template>
-  <div :class="colorToCssClass()"></div>
+  <div :class="colorToCssClass()" @click="$emit('click')"></div>
 </template>
 
 <style lang="scss" scoped>
@@ -40,5 +40,10 @@
   .product-color-red{ background-color: #991212; }
   .product-color-green{ background-color: #15b921; }
   .product-color-blue{ background-color: #2121cd; }
-  .product-color-selected{ border: 3px solid #353535 }
+  .product-color-selected{
+    /*border: 3px solid #353535 */
+    border: 3px solid #ffffff;
+    outline: 3px solid #ff9517;
+    border-radius: 7px;
+  }
 </style>

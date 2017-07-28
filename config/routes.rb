@@ -8,7 +8,11 @@ Rails.application.routes.draw do
 
   namespace :adminka do
     root 'product_lists#index'
-    resources :products
+    resources :products do
+      collection do
+        get 'is_name_taken'
+      end
+    end
     resources(:product_lists, except: [:show, :new]) do
       member do
         delete 'product/:product_id' => 'product_lists#remove_product', as: :remove_product_from
@@ -18,7 +22,7 @@ Rails.application.routes.draw do
       end
 
       collection do
-        get 'is_name_taken' => 'product_lists#name_taken?', as: :is_name_taken
+        get 'is_name_taken'
       end
     end
   end

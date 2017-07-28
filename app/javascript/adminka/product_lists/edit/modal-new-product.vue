@@ -1,10 +1,11 @@
 <script>
   import ModalNewProductFilterForm from './modal-new-product-filter-form.vue';
+  import ModalNewProductCreationForm from './modal-new-product-creation-form.vue';
 
   export default {
     name: 'modal-new-product',
 
-    components: { ModalNewProductFilterForm },
+    components: { ModalNewProductFilterForm, ModalNewProductCreationForm },
 
     props: ['productListId'],
 
@@ -22,11 +23,17 @@
           this.$emit('canceled');
         });
       },
+
+      switchFormMode(mode){
+        this.formMode = mode;
+      },
+
+
     },
 
     data: function () {
       return {
-        addingSource: 'filter', // filter | creation
+        formMode: 'filter', // filter | creation
       }
     },
 
@@ -43,8 +50,7 @@
   <div
     id="modal-new-product"
     class="modal fade" data-keyboard="false" data-backdrop="static"
-    @keyup.esc="handleCancelButton"
-    @keyup.enter="handleCreateButton" >
+    @keyup.esc="handleCanceled" >
 
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -53,13 +59,22 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <button type="button" class="btn btn-success">{{ t('adminka.product_list.ui_modal_new_product.header.btn_create_new') }}</button>
+              <button v-if="formMode == 'filter'" @click="switchFormMode('creation')" type="button" class="btn btn-success">{{ t('adminka.product_list.ui_modal_new_product.header.btn_create_new') }}</button>
+              <button v-if="formMode == 'creation'" @click="switchFormMode('filter')" type="button" class="btn btn-primary">{{ t('adminka.product_list.ui_modal_new_product.header.btn_select_existing') }}</button>
               <!--<button type="button" class="btn btn-secondary ml-2">{{ t('adminka.product_list.ui_modal_new_product.header.btn_all_products') }}</button>-->
             </div>
 
             <modal-new-product-filter-form
+              v-if="formMode == 'filter'"
               :productListId="productListId"
               @selected="handleSubmited"
+              @canceled="handleCanceled"
+            />
+
+            <modal-new-product-creation-form
+              v-if="formMode == 'creation'"
+              :productListId="productListId"
+              @created="handleSubmited"
               @canceled="handleCanceled"
             />
           </div>

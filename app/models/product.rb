@@ -11,4 +11,8 @@ class Product < ApplicationRecord
   def self.names
     Product.all.each_with_object([]) { |product, list| list << product.name }.join(',')
   end
+
+  def self.name_taken(name, author)
+    Product.where(name: name, author: author).any?
+  end
 end

@@ -148,7 +148,7 @@
       </ul>
     </div>
 
-    <div class="modal-footer" scope="props">
+    <div class="modal-footer">
       <button type="button" class="btn btn-primary" :disabled="!isProductSelected" @click="handleSelectButton">{{ t('adminka.product_list.ui_modal_new_product.footer.btn_add') }}</button>
       <button type="button" class="btn btn-secondary" @click="handleCancelButton">{{ t('adminka.product_list.ui_modal_new_product.footer.btn_cancel') }}</button>
     </div>
