@@ -67,11 +67,43 @@
       },
 
       checkPriceValidity(){
+        switch(true){
+          case !this.price :
+            this.isPriceValid = false;
+            this.invalidPriceMessage = this.t('adminka.product_list.ui_modal_new_product.creation_form.warnings.price.empty');
+            break;
+          case !!this.price.match(/[^0-9.\-]+/) :
+            this.isPriceValid = false;
+            this.invalidPriceMessage = this.t('adminka.product_list.ui_modal_new_product.creation_form.warnings.price.number_only');
+            break;
+          case (this.price.match(/\.+/g) || []).length > 1 :
+            this.isPriceValid = false;
+            this.invalidPriceMessage = this.t('adminka.product_list.ui_modal_new_product.creation_form.warnings.price.only_one_dot');
+            break;
+          case parseFloat(this.price) <= 0 :
+            this.isPriceValid = false;
+            this.invalidPriceMessage = this.t('adminka.product_list.ui_modal_new_product.creation_form.warnings.price.positive');
+            break;
+          default:
+            this.isPriceValid = true;
+            this.invalidPriceMessage = '';
+        }
+      },
 
+      checkDescriptionValidity(){
+        switch(true){
+          case this.description.length > 150 :
+            this.isDescriptionValid = false;
+            this.invalidDescriptionMessage = this.t('adminka.product_list.ui_modal_new_product.creation_form.warnings.description.too_big');
+            break;
+          default:
+            this.isDescriptionValid = true;
+            this.invalidDescriptionMessage = '';
+        }
       },
 
       checkFormValidity(){
-        this.isFormValid = this.isNameValid && this.isPriceValid;
+        this.isFormValid = this.isNameValid && this.isPriceValid && this.isDescriptionValid;
       }
     },
 
@@ -83,13 +115,16 @@
         colors: 'orange gray red green blue'.split(' '),
         isNameValid: false,
         isPriceValid: true,
+        isDescriptionValid: true,
         isFormValid: false,
+
         invalidNameMessage: '',
         invalidPriceMessage: '',
+        invalidDescriptionMessage: '',
 
         //fields
         name: '',
-        unit: 'pieces',
+        unit: 'kg',
         price: 100,
         description: '',
         selectedColor: 'orange',
@@ -102,6 +137,17 @@
     watch: {
       'name': function(){
         this.checkNameValidity();
+        this.checkFormValidity();
+      },
+
+      'price': function(){
+        this.checkPriceValidity();
+        this.checkFormValidity();
+      },
+
+      'description': function(){
+        this.checkDescriptionValidity();
+        this.checkFormValidity();
       }
     }
   }
@@ -141,16 +187,23 @@
     <!-- Description -->
     <div class="form-group mt-2">
       <label for="productCreationFormDescriptionInput">{{ t('adminka.product_list.ui_modal_new_product.creation_form.description.label') }}</label>
-      <textarea class="form-control" id="productCreationFormDescriptionInput" rows="3" :placeholder="t('adminka.product_list.ui_modal_new_product.creation_form.description.placeholder')"></textarea>
+      <textarea
+        v-model="description"
+        :placeholder="t('adminka.product_list.ui_modal_new_product.creation_form.description.placeholder')"
+        class="form-control" id="productCreationFormDescriptionInput" rows="3">
+      </textarea>
     </div>
+    <small v-if='!isDescriptionValid' class="form-text text-warning">{{ invalidDescriptionMessage }}</small>
 
-    <color-item
-      class="product-color-item"
-      v-for="color in colors"
-      @click="selectColor(color)"
-      :color="color"
-      :isSelected="isColorSelected(color)"
-    ></color-item>
+    <div class="mt-3">
+      <color-item
+        class="product-color-item"
+        v-for="color in colors"
+        @click="selectColor(color)"
+        :color="color"
+        :isSelected="isColorSelected(color)"
+      ></color-item>
+    </div>
 
     <div class="modal-footer">
       <button type="button" class="btn btn-success" :disabled="!isFormValid" @click="handleCreateButton">{{ t('adminka.product_list.ui_modal_new_product.footer.btn_create') }}</button>
