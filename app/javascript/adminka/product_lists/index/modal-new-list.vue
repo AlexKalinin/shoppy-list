@@ -1,25 +1,3 @@
-<template>
-  <div id="new-product-list" class="modal fade" data-keyboard="false" @keyup.esc="handleCancelButton" @keyup.enter="handleCreateButton">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{{ t('adminka.product_lists.ui_modal_new.title') }}</h5>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <input autofocus type="text" aria-describedby="nameWarningText" class="form-control" :placeholder="t('adminka.product_lists.ui_modal_new.placeholder')" v-model="name">
-            <small v-if="!isValid" id="nameWarningText" class="form-text text-warning">{{warnMessage}}</small>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button :disabled="!isValid" type="button" class="btn btn-primary" @click="handleCreateButton">{{ t('adminka.product_lists.ui_modal_new.buttons.create') }}</button>
-          <button type="button" class="btn btn-secondary" @click="handleCancelButton">{{ t('adminka.product_lists.ui_modal_new.buttons.cancel') }}</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
   export default {
     name: 'modal-popup',
@@ -104,6 +82,28 @@
     },
   }
 </script>
+
+<template>
+  <div id="new-product-list" class="modal fade" data-keyboard="false" @keyup.esc="handleCancelButton" @keyup.enter="handleCreateButton">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ t('adminka.product_lists.ui_modal_new.title') }}</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input autofocus type="text" aria-describedby="nameWarningText" class="form-control" :placeholder="t('adminka.product_lists.ui_modal_new.placeholder')" v-model="name">
+            <small v-if="!isValid" id="nameWarningText" class="form-text text-warning">{{warnMessage}}</small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button :disabled="!isValid" type="button" class="btn btn-primary" @click="handleCreateButton">{{ t('adminka.product_lists.ui_modal_new.buttons.create') }}</button>
+          <button type="button" class="btn btn-secondary" @click="handleCancelButton">{{ t('adminka.product_lists.ui_modal_new.buttons.cancel') }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 </style>

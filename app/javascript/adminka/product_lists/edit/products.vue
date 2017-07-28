@@ -49,7 +49,7 @@
 </script>
 
 <template>
-  <div class="col mt-3">
+  <div>
     <table class="table table-striped table-hover table-products">
       <thead>
       <tr>

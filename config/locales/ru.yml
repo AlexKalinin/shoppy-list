@@ -30,7 +30,7 @@ ru:
     main_menu:
       lists: 'Списки'
       products: 'Продукты'
-      logout: 'Выйти'
+      logout: 'Выход'
     product_lists:
       page_title: 'Все списки'
       button_new: 'Новый список'
@@ -72,6 +72,30 @@ ru:
           actions: 'Действия'
         loading: 'Товары подгружаются с сервера, пожалуйста подождите...'
         empty: 'Пока еще нет ни одного товара в этом списке. Создайте новый.'
+      ui_modal_new_product:
+        header:
+          title: 'Добавление товара'
+          btn_create_new: 'Создать новый'
+          btn_all_products: 'Все товары'
+        filter:
+          label: 'Фильтр'
+          placeholder: 'Начните вводить наименование товара'
+          loading: 'Загрузка списка товаров с сервера...'
+        creation_form:
+          name_field:
+            label: 'Наименование'
+            placeholder: 'Введите наименование'
+          unit: 'Единица измерения'
+          price:
+            label: 'Цена'
+            curency: 'Руб.'
+          color: 'Пожалуйста, выберите цвет товара'
+          description:
+            label: 'Описание'
+            placeholder: 'Описание к товару отсутствует'
+        footer:
+          btn_add: 'Добавить'
+          btn_cancel: 'Отмена'
 
     products:
       page_title: 'Все товары'

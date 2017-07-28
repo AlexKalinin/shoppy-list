@@ -78,7 +78,14 @@
         this.invalidNameWarnMessage = '';
         this.isNameValid = true;
         this.isNameChanged = false;
-      }
+      },
+      handleNewProductCreated(){
+        this.showNewProductWindow = false;
+        this.loadProductsFromServer();
+      },
+      handleNewProductCanceled(){
+        this.showNewProductWindow = false;
+      },
     },
 
     data: function () {
@@ -156,7 +163,12 @@
       </div>
     </div>
 
-    <modal-new-product v-if="showNewProductWindow" />
+    <modal-new-product
+      v-if="showNewProductWindow"
+      :productListId="productListId"
+      @created="handleNewProductCreated"
+      @canceled="handleNewProductCanceled"
+    />
 
     <div class="row mt-3">
       <div class="col">
