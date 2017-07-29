@@ -8,7 +8,8 @@
     components: { ColorItem, ProductAmountComponent },
 
     props: [
-      'productData' //undefined if this is new product
+      'productData',  //undefined if this is new product
+      'isUpdating',   // undefined|false if this is new product
     ],
 
     methods: {
@@ -31,6 +32,7 @@
         this.isAmountValid = data.isValid;
         this.amount = data.amount;
         this.checkFormValidity();
+        this.registerFormChange();
       },
 
       localizedUnitName(unit){
@@ -68,6 +70,11 @@
           data: { name: this.name },
           dataType: 'json',
           success: (is_product_name_taken) => {
+            if(this.isUpdating && this.name === this.productData.name){
+              this.isNameValid = true;
+              this.invalidNameMessage = '';
+              return;
+            }
             if(is_product_name_taken){
               this.isNameValid = false;
               this.invalidNameMessage = this.t('adminka.product_list.ui_modal_new_product.creation_form.warnings.name.taken');
@@ -82,20 +89,22 @@
       },
 
       checkPriceValidity(){
+        let price = '' + (this.price || '');
+
         switch(true){
-          case !this.price :
+          case !price :
             this.isPriceValid = false;
             this.invalidPriceMessage = this.t('adminka.product_list.ui_modal_new_product.creation_form.warnings.price.empty');
             break;
-          case !!this.price.match(/[^0-9.\-]+/) :
+          case !!price.match(/[^0-9\.]+/) :
             this.isPriceValid = false;
             this.invalidPriceMessage = this.t('adminka.product_list.ui_modal_new_product.creation_form.warnings.price.number_only');
             break;
-          case (this.price.match(/\.+/g) || []).length > 1 :
+          case (price.match(/\.+/g) || []).length > 1 :
             this.isPriceValid = false;
             this.invalidPriceMessage = this.t('adminka.product_list.ui_modal_new_product.creation_form.warnings.price.only_one_dot');
             break;
-          case parseFloat(this.price) <= 0 :
+          case parseFloat(price) <= 0 :
             this.isPriceValid = false;
             this.invalidPriceMessage = this.t('adminka.product_list.ui_modal_new_product.creation_form.warnings.price.positive');
             break;
@@ -144,14 +153,23 @@
 
         name: '',
         unit: 'kg',
-        price: 100,
+        price: '100',
         description: '',
         color: 'orange',
         amount: '1',
       }
     },
 
-    mounted(){
+    created(){
+      if(this.productData && !$.isEmptyObject(this.productData)){
+        this.name = this.productData.name;
+        this.unit = this.productData.unit;
+        this.price = this.productData.price;
+        this.description = this.productData.description;
+        this.color = this.productData.color;
+        this.amount = this.productData.amount;
+        console.log('this.productData', this.productData, 'this.amount', this.amount, 'this.productData.amount', this.productData.amount)
+      }
     },
 
     watch: {
@@ -177,11 +195,7 @@
       },
       'color': function(){
         this.registerFormChange();
-      },
-      'amount': function(){
-        this.checkFormValidity();
-        this.registerFormChange();
-      },
+      }
     }
   }
 </script>
@@ -243,6 +257,7 @@
       <hr>
       <product-amount-component
         @changed="handleAmountChange"
+        :defaultAmount="amount"
       />
     </div>
 

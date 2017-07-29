@@ -26,7 +26,7 @@
       },
 
       handleEdit(list){
-//        Turbolinks.visit(Routes.edit_adminka_product_list_path(list.id))
+        this.$emit('edit', list);
       },
 
       cssClassForList(list){

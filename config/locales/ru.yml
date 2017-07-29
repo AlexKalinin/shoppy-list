@@ -124,6 +124,13 @@ ru:
           btn_add: 'Добавить'
           btn_create: 'Создать'
           btn_cancel: 'Отмена'
+      ui_modal_edit_product:
+        header:
+          title: 'Редактирование товара'
+        footer:
+          btn_update: 'Обновить'
+          btn_cancel: 'Отмена'
+
 
     products:
       page_title: 'Все товары'

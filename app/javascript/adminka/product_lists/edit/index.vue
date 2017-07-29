@@ -1,10 +1,18 @@
 <script>
   import Products from './products'
   import ModalNewProduct from './modal-new-product'
+  import ModalEditProduct from './modal-edit-product'
 
   export default {
-    components: { Products, ModalNewProduct },
+    components: { Products, ModalNewProduct, ModalEditProduct },
     methods: {
+      handleEditProduct(product){
+        this.editingProduct = product;
+        this.showEditProductPopup();
+      },
+      showEditProductPopup(){
+        this.showProductEditWindow = true;
+      },
       showCreateNewProductPopup(){
         this.showNewProductWindow = true;
       },
@@ -79,12 +87,21 @@
         this.isNameValid = true;
         this.isNameChanged = false;
       },
+
       handleModalNewProductSubmitted(){
         this.showNewProductWindow = false;
         this.loadProductsFromServer();
       },
       handleModalNewProductCanceled(){
         this.showNewProductWindow = false;
+      },
+
+      handleModalEditProductSubmitted(){
+        this.showProductEditWindow = false;
+        this.loadProductsFromServer();
+      },
+      handleModalEditProductCanceled(){
+        this.showProductEditWindow = false;
       },
     },
 
@@ -95,10 +112,12 @@
         productListId: -1,
         productListName: '',
         showNewProductWindow: false,
+        showProductEditWindow: false,
         isProductsLoading: false,
         products: [],
         isNameValid: true,
         invalidNameWarnMessage: '',
+        editingProduct: {},
       }
     },
 
@@ -113,7 +132,6 @@
         this.validateName();
       }
     },
-
 
   }
 </script>
@@ -163,6 +181,14 @@
       </div>
     </div>
 
+    <modal-edit-product
+      v-if="showProductEditWindow"
+      :productListId="productListId"
+      :productData="editingProduct"
+      @submitted="handleModalEditProductSubmitted"
+      @canceled="handleModalEditProductCanceled"
+    />
+
     <modal-new-product
       v-if="showNewProductWindow"
       :productListId="productListId"
@@ -176,6 +202,7 @@
           :products="products"
           :isLoading="isProductsLoading"
           @deleted="loadProductsFromServer()"
+          @edit="handleEditProduct"
           :productListId="productListId"
         />
       </div>

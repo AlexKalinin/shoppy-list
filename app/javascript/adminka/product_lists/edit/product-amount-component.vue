@@ -6,12 +6,14 @@
 
     methods: {
       checkAmountValidity(){
+        let amount = '' + (this.amount || '');
+
         switch(true){
-          case !this.amount :
+          case !amount :
             this.isAmountValid = false;
             this.invalidAmountMessage = this.t('adminka.product_list.ui_modal_new_product.filter.warnings.amount.empty');
             break;
-          case !!this.amount.match(/[^0-9]+/) || parseInt(this.amount) <= 0 :
+          case !!amount.match(/[^0-9]+/) || parseInt(this.amount) <= 0 :
             this.isAmountValid = false;
             this.invalidAmountMessage = this.t('adminka.product_list.ui_modal_new_product.filter.warnings.amount.positive');
             break;

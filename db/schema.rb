@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170729040452) do
+ActiveRecord::Schema.define(version: 20170729120503) do
 
   create_table "product_lists", force: :cascade do |t|
     t.string "name"
@@ -21,10 +21,10 @@ ActiveRecord::Schema.define(version: 20170729040452) do
     t.index ["author_id"], name: "index_product_lists_on_author_id"
   end
 
-  create_table "product_lists_products", id: false, force: :cascade do |t|
+  create_table "product_lists_products", force: :cascade do |t|
+    t.integer "amount", default: 1
     t.integer "product_id"
     t.integer "product_list_id"
-    t.integer "amount", default: 1
     t.index ["product_id"], name: "index_product_lists_products_on_product_id"
     t.index ["product_list_id"], name: "index_product_lists_products_on_product_list_id"
   end

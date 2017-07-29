@@ -27,21 +27,17 @@ module Adminka
     def create
       @product = Product.create!(product_params)
       if (list_id = params[:productListId]) && (amount = params[:amount])
-        ProductListsProduct.create!(product: @product, amount: amount, product_list: ProductList.find(list_id))
+        ProductListsProduct.create!(product: @product, amount: amount, product_list_id: list_id)
       end
       render json: true
     end
 
     def update
-      respond_to do |format|
-        if @product.update(product_params)
-          format.html {redirect_to @product, notice: 'Product was successfully updated.'}
-          format.json {render :show, status: :ok, location: @product}
-        else
-          format.html {render :edit}
-          format.json {render json: @product.errors, status: :unprocessable_entity}
-        end
+      @product.update!(product_params)
+      if (list_id = params[:productListId]) && (amount = params[:amount])
+        ProductListsProduct.find_by(product: @product, product_list_id: list_id).update_attribute(:amount, amount)
       end
+      render json: true
     end
 
     def destroy
