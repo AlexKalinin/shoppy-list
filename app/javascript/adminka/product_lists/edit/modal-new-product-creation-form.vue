@@ -1,16 +1,45 @@
 <script>
   import ColorItem from './color-item'
+  import ModalNewProductAmountComponent from './modal-new-product-amount-component.vue'
+
   export default {
     name: 'modal-new-product-creation-form',
 
-    components: { ColorItem },
+    components: { ColorItem, ModalNewProductAmountComponent },
 
     props: ['productListId'],
 
     methods: {
+      handleAmountChange(data){
+        this.isAmountValid = data.isValid;
+        this.amount = data.amount;
+        this.checkFormValidity();
+      },
+
       handleCreateButton(){
-        console.log('Creating');
-        this.$emit('created');
+        if(!this.isFormValid){
+          return;
+        }
+
+        $.ajax({
+          url: Routes.adminka_products_path(),
+          method: 'POST',
+          dataType: 'json',
+          data: {
+            product: {
+              name: this.name,
+              unit: this.unit,
+              price: this.price,
+              description: this.description,
+              color: this.selectedColor,
+            },
+            productListId: this.productListId,
+            amount: this.amount
+          },
+          success: () => {
+            this.$emit('created');
+          }
+        });
       },
 
       handleCancelButton(){
@@ -92,6 +121,10 @@
 
       checkDescriptionValidity(){
         switch(true){
+          case !this.description :
+            this.isDescriptionValid = false;
+            this.invalidDescriptionMessage = this.t('adminka.product_list.ui_modal_new_product.creation_form.warnings.description.empty');
+            break;
           case this.description.length > 150 :
             this.isDescriptionValid = false;
             this.invalidDescriptionMessage = this.t('adminka.product_list.ui_modal_new_product.creation_form.warnings.description.too_big');
@@ -103,7 +136,7 @@
       },
 
       checkFormValidity(){
-        this.isFormValid = this.isNameValid && this.isPriceValid && this.isDescriptionValid;
+        this.isFormValid = this.isNameValid && this.isPriceValid && this.isDescriptionValid && this.isAmountValid;
       }
     },
 
@@ -115,8 +148,9 @@
         colors: 'orange gray red green blue'.split(' '),
         isNameValid: false,
         isPriceValid: true,
-        isDescriptionValid: true,
+        isDescriptionValid: false,
         isFormValid: false,
+        isAmountValid: true,
 
         invalidNameMessage: '',
         invalidPriceMessage: '',
@@ -128,6 +162,7 @@
         price: 100,
         description: '',
         selectedColor: 'orange',
+        amount: '1',
       }
     },
 
@@ -203,6 +238,13 @@
         :color="color"
         :isSelected="isColorSelected(color)"
       ></color-item>
+    </div>
+
+    <div class="mb-3">
+      <hr>
+      <modal-new-product-amount-component
+              @changed="handleAmountChange"
+      />
     </div>
 
     <div class="modal-footer">

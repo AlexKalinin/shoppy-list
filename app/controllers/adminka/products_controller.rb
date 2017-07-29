@@ -25,17 +25,11 @@ module Adminka
     end
 
     def create
-      @product = Product.new(product_params)
-
-      respond_to do |format|
-        if @product.save
-          format.html {redirect_to @product, notice: 'Product was successfully created.'}
-          format.json {render :show, status: :created, location: @product}
-        else
-          format.html {render :new}
-          format.json {render json: @product.errors, status: :unprocessable_entity}
-        end
+      @product = Product.create!(product_params)
+      if (list_id = params[:productListId]) && (amount = params[:amount])
+        ProductListsProduct.create!(product: @product, amount: amount, product_list: ProductList.find(list_id))
       end
+      render json: true
     end
 
     def update
@@ -67,7 +61,7 @@ module Adminka
       end
 
       def product_params
-        params.require(:product).permit(:name, :description, :amount, :unit, :color)
+        params.require(:product).permit(:name, :description, :unit, :color, :price).merge({author: current_user})
       end
   end
 end

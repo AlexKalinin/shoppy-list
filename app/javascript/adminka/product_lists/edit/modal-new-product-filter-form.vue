@@ -16,7 +16,7 @@
       },
 
       handleSelectButton(){
-        if(!this.isProductSelected){
+        if(!this.isFormValid){
           return;
         }
 
