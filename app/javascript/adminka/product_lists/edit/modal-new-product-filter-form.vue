@@ -1,10 +1,20 @@
 <script>
+  import ModalNewProductAmountComponent from './modal-new-product-amount-component.vue'
+
   export default {
     name: 'modal-new-product-filter-form',
+
+    components: { ModalNewProductAmountComponent },
 
     props: ['productListId'],
 
     methods: {
+      handleAmountChange(data){
+        this.isAmountValid = data.isValid;
+        this.amount = data.amount;
+        this.checkFormValidity();
+      },
+
       handleSelectButton(){
         if(!this.isProductSelected){
           return;
@@ -95,22 +105,6 @@
         this.filterQuery = '';
       },
 
-      checkAmountValidity(){
-        switch(true){
-          case !this.amount :
-            this.isAmountValid = false;
-            this.invalidAmountMessage = this.t('adminka.product_list.ui_modal_new_product.filter.warnings.amount.empty');
-            break;
-          case !!this.amount.match(/[^0-9]+/) || parseInt(this.amount) <= 0 :
-            this.isAmountValid = false;
-            this.invalidAmountMessage = this.t('adminka.product_list.ui_modal_new_product.filter.warnings.amount.positive');
-            break;
-          default:
-            this.isAmountValid = true;
-            this.invalidAmountMessage = '';
-        }
-      },
-
       checkFormValidity(){
         this.isFormValid = this.isProductSelected && this.isAmountValid;
       }
@@ -129,7 +123,6 @@
         isAmountValid: true,
         isFormValid: false,
         amount: '1',
-        invalidAmountMessage: '',
       }
     },
 
@@ -141,10 +134,6 @@
       'filterQuery': function(){
         this.removeProductsSelection();
         this.filterProducts();
-      },
-      'amount': function(){
-        this.checkAmountValidity();
-        this.checkFormValidity();
       },
       'isProductSelected': function(){
         this.checkFormValidity();
@@ -183,13 +172,9 @@
 
     <div v-if="isProductSelected" class="mb-3">
       <hr>
-      <div class="form-group row">
-        <label for="inputAmount" class="col-sm-3 col-form-label">{{ t('adminka.product_list.ui_modal_new_product.filter.amount.label') }}</label>
-        <div class="col-sm-9">
-          <input v-model='amount' type="text" class="form-control" id="inputAmount" :placeholder="t('adminka.product_list.ui_modal_new_product.filter.amount.placeholder')">
-        </div>
-      </div>
-      <small v-if='!isAmountValid' class="form-text text-warning">{{ invalidAmountMessage }}</small>
+      <modal-new-product-amount-component
+        @changed="handleAmountChange"
+      />
     </div>
 
     <div class="modal-footer">
