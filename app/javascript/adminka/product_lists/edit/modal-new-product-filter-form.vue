@@ -14,6 +14,7 @@
             url: Routes.add_product_to_adminka_product_list_path(this.productListId, this.lastSelectedProduct.id),
             method: 'POST',
             dataType: 'json',
+            data: { amount: this.amount },
             success: () => {
               this.$emit('selected');
             }
@@ -92,6 +93,26 @@
 
       clearFilterQuery(){
         this.filterQuery = '';
+      },
+
+      checkAmountValidity(){
+        switch(true){
+          case !this.amount :
+            this.isAmountValid = false;
+            this.invalidAmountMessage = this.t('adminka.product_list.ui_modal_new_product.filter.warnings.amount.empty');
+            break;
+          case !!this.amount.match(/[^0-9]+/) || parseInt(this.amount) <= 0 :
+            this.isAmountValid = false;
+            this.invalidAmountMessage = this.t('adminka.product_list.ui_modal_new_product.filter.warnings.amount.positive');
+            break;
+          default:
+            this.isAmountValid = true;
+            this.invalidAmountMessage = '';
+        }
+      },
+
+      checkFormValidity(){
+        this.isFormValid = this.isProductSelected && this.isAmountValid;
       }
     },
 
@@ -105,6 +126,10 @@
         products: [],
         lastSelectedProduct: {},
         isProductSelected: false,
+        isAmountValid: true,
+        isFormValid: false,
+        amount: '1',
+        invalidAmountMessage: '',
       }
     },
 
@@ -113,9 +138,16 @@
     },
 
     watch: {
-      'filterQuery': function(query){
+      'filterQuery': function(){
         this.removeProductsSelection();
         this.filterProducts();
+      },
+      'amount': function(){
+        this.checkAmountValidity();
+        this.checkFormValidity();
+      },
+      'isProductSelected': function(){
+        this.checkFormValidity();
       }
     },
   }
@@ -149,8 +181,19 @@
       </ul>
     </div>
 
+    <div v-if="isProductSelected" class="mb-3">
+      <hr>
+      <div class="form-group row">
+        <label for="inputAmount" class="col-sm-3 col-form-label">{{ t('adminka.product_list.ui_modal_new_product.filter.amount.label') }}</label>
+        <div class="col-sm-9">
+          <input v-model='amount' type="text" class="form-control" id="inputAmount" :placeholder="t('adminka.product_list.ui_modal_new_product.filter.amount.placeholder')">
+        </div>
+      </div>
+      <small v-if='!isAmountValid' class="form-text text-warning">{{ invalidAmountMessage }}</small>
+    </div>
+
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" :disabled="!isProductSelected" @click="handleSelectButton">{{ t('adminka.product_list.ui_modal_new_product.footer.btn_add') }}</button>
+      <button type="button" class="btn btn-primary" :disabled="!isFormValid" @click="handleSelectButton">{{ t('adminka.product_list.ui_modal_new_product.footer.btn_add') }}</button>
       <button type="button" class="btn btn-secondary" @click="handleCancelButton">{{ t('adminka.product_list.ui_modal_new_product.footer.btn_cancel') }}</button>
     </div>
 

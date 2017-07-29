@@ -79,9 +79,16 @@ ru:
           btn_select_existing: 'Выбрать существующий'
 #          btn_all_products: 'Все товары'
         filter:
+          warnings:
+            amount:
+              empty: 'Количество должно быть указано!'
+              positive: 'Количество должно быть положительным целым числом, больше нуля.'
           label: 'Фильтр'
           placeholder: 'Начните вводить наименование товара'
           loading: 'Загрузка списка товаров с сервера...'
+          amount:
+            label: 'Количество'
+            placeholder: 'Введите количество товара'
         creation_form:
           warnings:
             name:

@@ -45,7 +45,9 @@ module Adminka
       product = Product.find(params[:product_id])
       authorize! :update, @product_list
       authorize! :read, product
-      @product_list.products << product unless @product_list.product_ids.include? product.id
+      unless @product_list.product_ids.include? product.id
+        ProductListsProduct.create!(product: product, product_list: @product_list, amount: params[:amount])
+      end
       render json: true
     end
 

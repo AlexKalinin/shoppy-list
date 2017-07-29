@@ -8,7 +8,8 @@ Rails.application.routes.draw do
 
   namespace :adminka do
     root 'product_lists#index'
-    resources :products do
+
+    resources :products do # TODO: specify :only [:actions]
       collection do
         get 'is_name_taken'
       end
