@@ -1,5 +1,6 @@
 class ProductList < ApplicationRecord
-  has_and_belongs_to_many :products
+  has_many :product_lists_products
+  has_many :products, through: :product_lists_products
   belongs_to :author, class_name: 'User', foreign_key: 'author_id'
 
   validates :name, presence: true
@@ -13,7 +14,7 @@ class ProductList < ApplicationRecord
 
   def sum
     # Rails.cache.fetch "product_list.#{self.id}.products_sum" do    # TODO: think about cache
-      products.inject(0){|sum, p| sum + p.price * p.amount }.round 2
+      product_lists_products.inject(0){|sum, plp| sum + plp.product.price * plp.amount }.round 2
     # end
   end
 end

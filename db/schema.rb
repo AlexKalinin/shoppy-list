@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727135215) do
+ActiveRecord::Schema.define(version: 20170729040452) do
 
   create_table "product_lists", force: :cascade do |t|
     t.string "name"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20170727135215) do
   create_table "product_lists_products", id: false, force: :cascade do |t|
     t.integer "product_id"
     t.integer "product_list_id"
+    t.integer "amount", default: 1
     t.index ["product_id"], name: "index_product_lists_products_on_product_id"
     t.index ["product_list_id"], name: "index_product_lists_products_on_product_list_id"
   end
@@ -31,7 +32,6 @@ ActiveRecord::Schema.define(version: 20170727135215) do
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.integer "amount"
     t.string "unit"
     t.integer "color"
     t.datetime "created_at", null: false

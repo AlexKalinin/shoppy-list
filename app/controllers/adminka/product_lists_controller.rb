@@ -54,7 +54,7 @@ module Adminka
     end
 
     def products
-      @products = @product_list.products
+      @product_lists_products = @product_list.product_lists_products
       respond_to :json
     end
 
