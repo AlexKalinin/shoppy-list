@@ -30,6 +30,7 @@
           url: Routes.adminka_products_path(),
           method: 'GET',
           dataType: 'json',
+          data: { filter: { except_product_list_id: this.productListId }} ,
           success: (data) => {
             for(let i = 0; i < data.length; i++){ //helping observer to watch `isSelected` field
               data[i].isSelected = false;

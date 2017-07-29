@@ -7,6 +7,11 @@ module Adminka
 
     def index
       @products = Product.all
+
+      if (filter_product_list_id = params.dig(:filter, :except_product_list_id))
+        excluding_ids = ProductList.find(filter_product_list_id).product_ids
+        @products = @products.excluded_by_ids(excluding_ids)
+      end
     end
 
     def show

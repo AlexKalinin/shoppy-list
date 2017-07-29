@@ -8,6 +8,10 @@ class Product < ApplicationRecord
   validates :name, :amount, :unit, presence: true
   validates :description, presence: true, length: { maximum: 150 }
 
+  scope :excluded_by_ids, (lambda do |product_ids|
+    where('id NOT IN (?)', product_ids) if product_ids.is_a?(Array) && product_ids.any? # avoiding of zero zet division
+  end)
+
   def self.names
     Product.all.each_with_object([]) { |product, list| list << product.name }.join(',')
   end
