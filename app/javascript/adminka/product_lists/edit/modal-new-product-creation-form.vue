@@ -1,11 +1,11 @@
 <script>
   import ColorItem from './color-item'
-  import ModalNewProductAmountComponent from './modal-new-product-amount-component.vue'
+  import ProductAmountComponent from './product-amount-component'
 
   export default {
     name: 'modal-new-product-creation-form',
 
-    components: { ColorItem, ModalNewProductAmountComponent },
+    components: { ColorItem, ProductAmountComponent },
 
     props: ['productListId'],
 
@@ -242,8 +242,8 @@
 
     <div class="mb-3">
       <hr>
-      <modal-new-product-amount-component
-              @changed="handleAmountChange"
+      <product-amount-component
+        @changed="handleAmountChange"
       />
     </div>
 

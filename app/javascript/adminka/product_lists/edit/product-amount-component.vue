@@ -1,6 +1,6 @@
 <script>
   export default {
-    name: 'modal-new-product-amount-component',
+    name: 'product-amount-component',
 
     props: ['defaultAmount'],
 

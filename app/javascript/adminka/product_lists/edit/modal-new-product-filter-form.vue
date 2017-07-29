@@ -1,10 +1,10 @@
 <script>
-  import ModalNewProductAmountComponent from './modal-new-product-amount-component.vue'
+  import ProductAmountComponent from './product-amount-component'
 
   export default {
     name: 'modal-new-product-filter-form',
 
-    components: { ModalNewProductAmountComponent },
+    components: { ProductAmountComponent },
 
     props: ['productListId'],
 
@@ -172,7 +172,7 @@
 
     <div v-if="isProductSelected" class="mb-3">
       <hr>
-      <modal-new-product-amount-component
+      <product-amount-component
         @changed="handleAmountChange"
       />
     </div>
